@@ -2,12 +2,12 @@
 
 
 Keys:
-  + = +LaserSpeed
+  *  + = +LaserSpeed
   
-  - = -LaserSpeed
+  *  - = -LaserSpeed
   
-  SPACE = Starter Position
+  *  SPACE = Starter Position
   
-  P = Shoot
+  *  P = Shoot
   
-  Arrows = Move
+  *  Arrows = Move
