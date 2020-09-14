@@ -1,5 +1,6 @@
 package main;
 
+import gamesObjects.Constants;
 import graphics.Assets;
 import input.KeyBoard;
 import states.GameState;
@@ -10,7 +11,6 @@ import java.awt.image.BufferStrategy;
 
 public class Window extends JFrame implements Runnable {
 
-    public static final int WIDTH = 800, HEIGHT = 600;
     private Canvas canvas;
     private Thread thread;
 
@@ -32,18 +32,17 @@ public class Window extends JFrame implements Runnable {
     {
 
         setTitle("Space game");
-        setSize(WIDTH, HEIGHT);
+        setSize(Constants.WIDTH, Constants.HEIGHT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
         setLocationRelativeTo(null);
-        setVisible(true);
 
         canvas = new Canvas();
         keyBoard = new KeyBoard();
 
-        canvas.setPreferredSize(new Dimension(WIDTH, HEIGHT));
-        canvas.setMaximumSize(new Dimension(WIDTH, HEIGHT));
-        canvas.setMinimumSize(new Dimension(WIDTH, HEIGHT));
+        canvas.setPreferredSize(new Dimension(Constants.WIDTH, Constants.HEIGHT));
+        canvas.setMaximumSize(new Dimension(Constants.WIDTH, Constants.HEIGHT));
+        canvas.setMinimumSize(new Dimension(Constants.WIDTH, Constants.HEIGHT));
         canvas.setFocusable(true);
 
 
@@ -53,6 +52,7 @@ public class Window extends JFrame implements Runnable {
         canvas.addKeyListener(keyBoard);
 
 
+        setVisible(true);
     }
 
     public static void main(String[] args) {
@@ -81,14 +81,18 @@ public class Window extends JFrame implements Runnable {
 
         //-----------//
         g.setColor(Color.black);
-        g.fillRect(0, 0, WIDTH, HEIGHT);
+        g.fillRect(0, 0, Constants.WIDTH, Constants.HEIGHT);
 
 
         gameState.draw(g);
 
-
-        g.drawString(""+AVERAGEFPS, 100, 100);
-
+        g.setColor(Color.WHITE);
+        g.drawString("FPS "+AVERAGEFPS, 20, 20 );
+        g.drawString("+ = +LaserSpeed", 20, 35 );
+        g.drawString("- = -LaserSpeed", 20, 50 );
+        g.drawString("SPACE = Starter Position", 20, 65 );
+        g.drawString("P = Shoot", 20, 80 );
+        g.drawString("Arrows = Move", 20, 95 );
 
         //--------------//
         g.dispose();

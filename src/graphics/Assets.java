@@ -1,6 +1,7 @@
 package graphics;
 
 import java.awt.image.BufferedImage;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Assets {
 
@@ -14,6 +15,18 @@ public class Assets {
     public static BufferedImage lasserRed;
     public static BufferedImage lasserGreen;
 
+    //meteors
+    public static BufferedImage[] bigs = new BufferedImage[4];
+    public static BufferedImage[] mids = new BufferedImage[2];
+    public static BufferedImage[] smalls = new BufferedImage[2];
+    public static BufferedImage[] tinies = new BufferedImage[2];
+
+    //explosions
+    public static BufferedImage[] exp = new BufferedImage[8];
+
+    //ufo
+    public static BufferedImage[] ufo = new BufferedImage[4];;
+
     public static void init(){
 
         player = Loader.ImageLoader("/ships/player.png");
@@ -22,6 +35,27 @@ public class Assets {
         lasserBlue =  Loader.ImageLoader("/lassers/laserBlue.png");
         lasserGreen =  Loader.ImageLoader("/lassers/laserGreen.png");
         lasserRed =  Loader.ImageLoader("/lassers/laserRed.png");
+
+        for(int i = 0; i < bigs.length; i++){
+            bigs[i] = Loader.ImageLoader("/meteors/big"+(i+1)+".png");
+        }
+        for(int i = 0; i < mids.length; i++){
+            mids[i] = Loader.ImageLoader("/meteors/mid"+(i+1)+".png");
+        }
+        for(int i = 0; i < smalls.length; i++){
+            smalls[i] = Loader.ImageLoader("/meteors/small"+(i+1)+".png");
+        }
+        for(int i = 0; i < tinies.length; i++){
+            tinies[i] = Loader.ImageLoader("/meteors/tiny"+(i+1)+".png");
+        }
+        for (int i = 0; i < exp.length; i++){
+            exp[i] = Loader.ImageLoader("/explosion/"+i+".png");
+        }
+        for (int i = 0; i < ufo.length; i++) {
+            ufo[i] = Loader.ImageLoader("/enemies/ufo"+i+".png");
+        }
+
+
 
     }
 
