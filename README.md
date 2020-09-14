@@ -2,9 +2,9 @@
 
 
 Keys:
-  *  + = +LaserSpeed
+  * + = +LaserSpeed
   
-  *  - = -LaserSpeed
+  * - = -LaserSpeed
   
   *  SPACE = Starter Position
   
