@@ -9,10 +9,14 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 public class Laser extends MovingObject{
-    public Laser(Vector2D position, Vector2D velocity, double maxVel, double angle, BufferedImage texture, GameState gameState) {
+
+    String from;
+
+    public Laser(Vector2D position, Vector2D velocity, double maxVel, double angle, BufferedImage texture, GameState gameState, String from) {
         super(position, velocity, maxVel, texture, gameState);
         this.angle = angle;
         this.velocity = velocity.scale(maxVel);
+        this.from = from;
     }
 
     @Override
@@ -44,5 +48,9 @@ public class Laser extends MovingObject{
     @Override
     public Vector2D getCenter(){
         return new Vector2D(position.getX() + width/2, position.getY() + width/2);
+    }
+
+    public String getFrom() {
+        return from;
     }
 }

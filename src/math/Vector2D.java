@@ -48,6 +48,10 @@ public class Vector2D {
         return new Vector2D(Math.cos(angle)*magnitude, Math.sin(angle)*magnitude);
     }
 
+    public double getAngle() {
+        return Math.asin(y/getMagnitude());
+    }
+
     public double getX() {
         return x;
     }
@@ -63,4 +67,6 @@ public class Vector2D {
     public void setY(double y) {
         this.y = y;
     }
+
+
 }

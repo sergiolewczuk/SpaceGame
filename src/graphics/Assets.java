@@ -1,6 +1,8 @@
 package graphics;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.nio.Buffer;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Assets {
@@ -25,7 +27,18 @@ public class Assets {
     public static BufferedImage[] exp = new BufferedImage[8];
 
     //ufo
-    public static BufferedImage[] ufo = new BufferedImage[4];;
+    public static BufferedImage[] ufo = new BufferedImage[4];
+
+    //numbers
+    public static BufferedImage[] numbers = new BufferedImage[11];
+
+    //lifes
+    public static BufferedImage life;
+
+    //fonts
+    public static Font fontBig;
+    public static Font fontMed;
+
 
     public static void init(){
 
@@ -54,8 +67,14 @@ public class Assets {
         for (int i = 0; i < ufo.length; i++) {
             ufo[i] = Loader.ImageLoader("/enemies/ufo"+i+".png");
         }
+        for (int i = 0; i < numbers.length; i++) {
+            numbers[i] = Loader.ImageLoader("/numbers/"+i+".png");
+        }
 
+        life = Loader.ImageLoader("/others/life.png");
 
+        fontBig = Loader.loadFont("/fonts/kenvector_future.ttf", 42);
+        fontMed = Loader.loadFont("/fonts/kenvector_future.ttf", 20);
 
     }
 

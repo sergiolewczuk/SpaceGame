@@ -17,6 +17,9 @@ public class GameState {
     private ArrayList<MovingObject> movingObjects = new ArrayList<MovingObject>();
     private ArrayList<Animation> explosions = new ArrayList<Animation>();
 
+    private int score = 0;
+    private int lives = 3;
+
     public int meteors;
 
     public GameState() {
@@ -27,6 +30,10 @@ public class GameState {
 
         meteors = 1;
         startWave();
+    }
+
+    public void addScore(int value) {
+        score += value;
     }
 
     private void startWave(){
@@ -91,6 +98,7 @@ public class GameState {
         ));
     }
 
+
     public void playExplosion(Vector2D position){
         explosions.add(new Animation(
                 Assets.exp,
@@ -103,22 +111,7 @@ public class GameState {
 
         // RESTART
         if (KeyBoard.SPACE) {
-            boolean hayPlayer = false;
-
-            for(int i = 0; i < movingObjects.size(); i++){
-                MovingObject m = movingObjects.get(i);
-                if (m instanceof Player)
-                    hayPlayer = true;
-            }
-            if (!hayPlayer)
-                movingObjects.add(new Player(
-                        new Vector2D(Constants.WIDTH/2 - Assets.player.getWidth()/2,
-                                Constants.HEIGHT/2 - Assets.player.getHeight()/2),
-                        new Vector2D(),
-                        Constants.PLAYER_MAX_VEL,
-                        Assets.player,
-                        this
-                ));
+            respawnWithSpace();
         }
 
         for (int i = 0; i < movingObjects.size(); i++) {
@@ -187,6 +180,43 @@ public class GameState {
            Animation anim = explosions.get(i);
             g2d.drawImage(anim.getCurrentFrame(), (int) anim.getPosition().getX(), (int) anim.getPosition().getY(), null);
         }
+
+        drawScore(g);
+        drawLives(g);
+    }
+
+    private void drawScore(Graphics g) {
+        Vector2D pos = new Vector2D(1050, 25);
+        String scoreToString = Integer.toString(score);
+
+        for (int i = 0; i < scoreToString.length(); i++) {
+            g.drawImage(Assets.numbers[Integer.parseInt(scoreToString.substring(i, i +1))],
+                    (int)pos.getX(), (int)pos.getY(), null);
+            pos.setX(pos.getX() + 20);
+        }
+    }
+
+    private void drawLives(Graphics g){
+        Vector2D livesPosition = new Vector2D(650, 25);
+        g.drawImage(Assets.life, (int)livesPosition.getX(), (int)livesPosition.getY(), null);
+        g.drawImage(Assets.numbers[10], (int)livesPosition.getX() + 40,
+                (int)livesPosition.getY() + 5, null);
+
+        String livesToString = Integer.toString(lives);
+
+        Vector2D pos = new Vector2D(livesPosition.getX(), livesPosition.getY());
+
+        for(int i = 0; i < livesToString.length(); i++) {
+
+            int number = Integer.parseInt(livesToString.substring(i, i+1));
+            if (number < 0)
+                break;
+
+            g.drawImage(Assets.numbers[number],
+                    (int)pos.getX() + 60,(int)pos.getY() + 5,null);
+            pos.setX(pos.getX() + 20);
+
+        }
     }
 
     public ArrayList<MovingObject> getMovingObjects() {
@@ -200,4 +230,75 @@ public class GameState {
     public Player getPlayer() {
         return player;
     }
+
+    public int getLives() {
+        return lives;
+    }
+
+    public void setLives(int lives) {
+        this.lives = lives;
+    }
+
+    public void substractLives(){
+        lives--;
+    }
+
+    private void respawnWithSpace(){
+
+        boolean hayPlayer = false;
+
+        for(int i = 0; i < movingObjects.size(); i++){
+            MovingObject m = movingObjects.get(i);
+            if (m instanceof Player) {
+                hayPlayer = true;
+            }
+        }
+
+        if (hayPlayer) {
+            for(int i = 0; i < movingObjects.size(); i++){
+                MovingObject m = movingObjects.get(i);
+                if (m instanceof Player && getLives() == 0) {
+                    ((Player) m).destroy();
+                    setLives(5);
+
+                }
+            }
+        } else {
+            Player newPlayer = new Player(
+                    new Vector2D(Constants.WIDTH/2 - Assets.player.getWidth()/2,
+                            Constants.HEIGHT/2 - Assets.player.getHeight()/2),
+                    new Vector2D(),
+                    Constants.PLAYER_MAX_VEL,
+                    Assets.player,
+                    this);
+
+            movingObjects.add(newPlayer);
+
+            setLives(5);
+        }
+
+
+
+        /*if (hayPlayer) {
+            for(int i = 0; i < movingObjects.size(); i++){
+                MovingObject m = movingObjects.get(i);
+                if (m instanceof Player){
+                    getMovingObjects().remove(m);
+                }
+            }
+        } else if (!hayPlayer && lives == 0) {
+            movingObjects.add(new Player(
+                    new Vector2D(Constants.WIDTH/2 - Assets.player.getWidth()/2,
+                                Constants.HEIGHT/2 - Assets.player.getHeight()/2),
+                    new Vector2D(),
+                    Constants.PLAYER_MAX_VEL,
+                    Assets.player,
+                    this
+                ));
+            setLives(5);
+        }*/
+
+
+    }
+
 }

@@ -1,5 +1,6 @@
 package gamesObjects;
 
+import graphics.Loader;
 import math.Vector2D;
 import states.GameState;
 
@@ -47,8 +48,28 @@ public abstract class MovingObject extends GameObjects {
     }
 
     private void objetCollision(MovingObject a, MovingObject b){
-        if(!(a instanceof Meteor && b instanceof Meteor) &&
-                !(a instanceof Ufo && b instanceof Ufo)) {
+
+        if (a instanceof Player && ((Player)a).isSpawning()) {
+            return;
+        }
+        if (b instanceof Player && ((Player)b).isSpawning()) {
+            return;
+        }
+
+        // que no se maten entre ufos ni rompan meteoros
+        if((a instanceof Laser && ((Laser) a).getFrom().equals("Ufo") && b instanceof Meteor) ||
+                (a instanceof Meteor && b instanceof Laser && ((Laser) b).getFrom().equals("Ufo")) ||
+
+                (a instanceof Laser && ((Laser) a).getFrom().equals("Ufo") && b instanceof Ufo) ||
+                (a instanceof Ufo && b instanceof Laser && ((Laser) b).getFrom().equals("Ufo")))
+            return;
+
+
+        if(!(a instanceof Meteor && b instanceof Meteor) &&     // no chocar entre meteoros
+                !(a instanceof Ufo && b instanceof Ufo) &&      // no chocar entre Ufo
+                !(a instanceof Ufo && b instanceof Meteor) &&   // no chocar entre ufo y meteoros
+                !(a instanceof Meteor && b instanceof Ufo)) {   // no chocar entre ufo y meteoros
+
             gameState.playExplosion(getCenter());
             a.destroy();
             b.destroy();
